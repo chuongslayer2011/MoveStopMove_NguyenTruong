@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a94c7be6fd4f4746b36e66c13ebafb6, type: 3}
+  m_Name: New Pant Data
+  m_EditorClassIdentifier: 
+  pantSkins:
+  - {fileID: 2100000, guid: 79218098b3fefa3439dd3d8c0ce0f468, type: 2}
+  - {fileID: 2100000, guid: 60f2416e5f1acdf41ba48f628495614c, type: 2}
+  - {fileID: 2100000, guid: 6349d97b451e0a7418078888f87b8404, type: 2}
+  - {fileID: 2100000, guid: acee2683b0c3272488d36befe025b85a, type: 2}
+  - {fileID: 2100000, guid: 26aa898bed741d54cabebd7e599e1a0a, type: 2}
+  - {fileID: 2100000, guid: 5610b3aac8e76ef45b50c58bc74e01c4, type: 2}
+  - {fileID: 2100000, guid: 27b93459d4297274fb17ad0b618d4e81, type: 2}
+  - {fileID: 2100000, guid: 5ca12c7f30e365648a18eb8c98390504, type: 2}
+  - {fileID: 2100000, guid: 303bae0db2c982d49b6631b032900821, type: 2}
+  - {fileID: 2100000, guid: a55d14b1d16e2364d89dd923e27377c2, type: 2}
+  bodyColors:
+  - {fileID: 2100000, guid: e499dfb66b0e9954eaee5ece1578dcea, type: 2}
+  - {fileID: 2100000, guid: c09fe920d59ef0a45bbc8db13ff5698f, type: 2}
+  - {fileID: 2100000, guid: fd811dc28ff710e4da6c9dc93eabb81a, type: 2}
+  - {fileID: 2100000, guid: 0243e995d7f337a4c9bebc6701b5f92e, type: 2}
+  - {fileID: 2100000, guid: 46a0fc63742dc9f48ba6c8884d8be612, type: 2}
+  - {fileID: 2100000, guid: 5df9c97204867c54abe5ae154bc8a1a2, type: 2}
+  - {fileID: 2100000, guid: b68e67491e532b749a4db748fb9437c0, type: 2}
+  hairPrefabs:
+  - {fileID: 7695131127008197520, guid: 835ff82d0b7601747b039ab7f0e29b39, type: 3}
+  - {fileID: 2462240319036451800, guid: f4e28bef606de504ab0a42042a9d2801, type: 3}
+  - {fileID: 9012610051611430023, guid: e3f54e925f4af1548ae2374a5a89b784, type: 3}
+  - {fileID: 5219371243329183610, guid: 0c7bcee4472379746849b792f1b0c932, type: 3}
+  - {fileID: 2039454907494900811, guid: cf42da5526e23774a9a464c2406730ba, type: 3}
+  - {fileID: 971743629182565799, guid: 0d03f2398a5392148890220d8f337e1a, type: 3}
+  - {fileID: 2499899387468865800, guid: 64c10ae56474f0149b16b7f0e6e31c5d, type: 3}
+  - {fileID: 2389883307786626653, guid: 3001645d042602f42b7ab8a3a83c5527, type: 3}
+  - {fileID: 411490763219811345, guid: 04726135379616f43b1a6be47078bc5c, type: 3}
+  - {fileID: 2008979977568724684, guid: 952137dd80099a64f94b704a6f04ff7e, type: 3}
+  - {fileID: 9030893747687684567, guid: 170d6dcaf261f1e4cbb5d64e9d04e7a3, type: 3}
+  - {fileID: 9030893747687684567, guid: 170d6dcaf261f1e4cbb5d64e9d04e7a3, type: 3}
+  shieldPrefabs:
+  - {fileID: 8408034396705479020, guid: 75375cb88efc38a41b3c8098512eddb8, type: 3}
+  - {fileID: 6139922104605260148, guid: ecb5062a489345f4a845bf55ccf50ead, type: 3}
+  - {fileID: 4753214638606295640, guid: 744a3a7f3a958ca48834a7348e34070a, type: 3}
+  - {fileID: 4753214638606295640, guid: 744a3a7f3a958ca48834a7348e34070a, type: 3}
