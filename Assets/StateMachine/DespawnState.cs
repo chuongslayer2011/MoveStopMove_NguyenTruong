@@ -10,8 +10,8 @@ public class DespawnState : IState<Character>
         t.ChangeAnim(Const.DIE_ANIM);
         t.OnDespawn();
         t.SetTargetable(false);
-        if(t.CompareTag(Const.ENEMY_TAGNAME))
-        t.agent.enabled = false;
+        if (t.CompareTag(Const.ENEMY_TAGNAME))
+            t.agent.enabled = false;
         
     }
 

@@ -165,9 +165,9 @@ MonoBehaviour:
   bodySkin: {fileID: 3802652484330123392}
   pantData: {fileID: 11400000, guid: da3fddb572071de48aca2a98bd5ddae1, type: 2}
   movingSpeed: 7
-  _collider: {fileID: 5285407364538994998}
+  colliderCharacter: {fileID: 5285407364538994998}
   targetIndicator: {fileID: 0}
-  pos: {fileID: 374777287102118339}
+  characterPosition: {fileID: 374777287102118339}
   targetToAttack: {fileID: 0}
   targetList: []
   isPlay: 0

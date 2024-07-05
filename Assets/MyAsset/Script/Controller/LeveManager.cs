@@ -5,16 +5,16 @@ using UnityEngine;
 public class LevelManager : Singleton<LevelManager>
 {   
     public static LevelManager instance;
-    [SerializeField] MapController[] levels;
+    [SerializeField] private MapController[] levels;
     [SerializeField] private List<int> enemyOnLevel = new List<int>();
-    public MapController currentLevel;
+    [SerializeField] private Player player;
+    private MapController currentLevel;
     private int currentLevelIndex;
-    public int coinObtainCurrentLevel=0;
-    public Player player;
+    private int coinObtainCurrentLevel=0;
+    
     private void Awake()
     {
         instance = this;
-        player = FindObjectOfType<Player>();
     }
     public void Start()
     {   
@@ -56,5 +56,9 @@ public class LevelManager : Singleton<LevelManager>
     public int GetCoinObtainCurrentLevel()
     {
         return coinObtainCurrentLevel;
+    }
+    public Player GetPlayer()
+    {
+        return player;  
     }
 }

@@ -21,7 +21,7 @@ public class MapController : MonoBehaviour
     {
         Clear();
         SpawnAllEnemy();
-        //SpawnDecor();
+        SpawnDecor();
         for (int i = 0; i < 2; i++)
         {
             SpawnBooster();
@@ -116,7 +116,7 @@ public class MapController : MonoBehaviour
     public void SpawnBooster()
     {   
         Vector3 offset = new Vector3(0,-1f,0);
-        Booster b = SimplePool.Spawn<Booster>(PoolType.booster, RandomSpawnPoint() + offset, Quaternion.Euler(0, 0, 0));
+        Booster b = SimplePool.Spawn<Booster>(PoolType.Booster, RandomSpawnPoint() + offset, Quaternion.Euler(0, 0, 0));
         currentBoosterOnMap.Add(b);
         b.OnInit();
     }

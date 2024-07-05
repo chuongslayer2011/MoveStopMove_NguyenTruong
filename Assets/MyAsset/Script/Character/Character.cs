@@ -14,37 +14,39 @@ public class Character : GameUnit
         
     }
     [SerializeField] public Animator animator;
+    [SerializeField] public NavMeshAgent agent;
     [SerializeField] protected Weapon weaponGunner;
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected WeaponOnHand weaponOnHand;
     [SerializeField] protected HairOnHead hairOnHead;
-    [SerializeField] private GameObject attackRange;
-    [SerializeField] public NavMeshAgent agent;
     [SerializeField] protected Renderer Pant;
     [SerializeField] protected Renderer bodySkin;
     [SerializeField] protected PantData pantData;
     [SerializeField] protected float movingSpeed;
-    [SerializeField] protected Collider _collider;
+    [SerializeField] protected Collider colliderCharacter;
     [SerializeField] protected TargetIndicator targetIndicator;
-    [SerializeField] Transform pos;
-    private int score;
+    [SerializeField] private Transform characterPosition;
+    [SerializeField] private GameObject attackRange;
+    private Vector3 scaleChange = new Vector3(0.1f, 0.1f, 0.1f);
+    private int characterScore;
+    private Vector3 characterScale;
+    private List<Character> characterTarget = new List<Character>();
     public Collider CLD
     {
         get
         {
-            //tf = tf ?? gameObject.transform;
-            
-            return _collider;
+            return colliderCharacter;
         }
     }
-    private string currentAnimName;
-    public Character targetToAttack; 
+    
+    public Character targetToAttack;
     public List<Character> targetList = new List<Character>();
+    public bool isPlay;
     private IState<Character> currentState;
     private bool canAttack = true;
-    protected bool targetable = true;
-    public bool isPlay;
+    private string currentAnimName;
     private CharacterAttribute characterAttribute = new CharacterAttribute();
+    protected bool targetable = true;
     private void Start()
     {
         ChangeState(new IdleState());
@@ -67,14 +69,16 @@ public class Character : GameUnit
     {
         ChangeState(new IdleState());
         targetable = true;
-        TF.localScale = Vector3.one;
+        characterScale = TF.localScale;
+        characterScale = Vector3.one;
         characterAttribute.movingSpeed = 5;
         targetList.Clear();
+        characterTarget.Clear();
         targetToAttack = null;
         this.TF.rotation = Quaternion.Euler(0, 0, 0);
         InstantiateTargetIndicator();
         ResetBuff();
-        score = 0;
+        characterScore = 0;
         canAttack = true;
     }
     protected virtual void OnTriggerEnter(Collider other)
@@ -83,13 +87,12 @@ public class Character : GameUnit
         if ((other.CompareTag(Const.PLAYER_TAGNAME) || other.CompareTag(Const.ENEMY_TAGNAME)))
         {
             Character target = MapController.instance.GetCharacterByCollider(other);
-            if (target != null)
+            if (target != null && target.targetable)
             {   
-                if(target.targetable)
-                {
-                    targetList.Add(target);
-                    ResetTargetCharacter();
-                }
+
+                 targetList.Add(target);
+                 ResetTargetCharacter();
+                target.AddCharacterTarger(this);
                 
             }
             
@@ -101,7 +104,9 @@ public class Character : GameUnit
         if (other.CompareTag(Const.PLAYER_TAGNAME) || other.CompareTag(Const.ENEMY_TAGNAME))
         {
             Character target = MapController.instance.GetCharacterByCollider(other);
+            if (target == null) return;
             RemoveCharacterTarget(target);
+            target.RemoveCharacterTarger(this);
         }
     }
 
@@ -113,31 +118,21 @@ public class Character : GameUnit
     
     public void ResetTargetCharacter()
     {
-        if (targetList.Count == 0)
+        targetToAttack = null;
+        if (targetList.Count == 0) return;
+        targetToAttack = null;
+        targetList.RemoveAll(target => (target.gameObject.activeSelf == false || target.targetable == false));
+        if(targetList.Count > 0 )
         {
-            targetToAttack = null;
+            targetList.Sort((obj1, obj2) =>
+            {
+                float distance1 = Vector3.Distance(obj1.transform.position, transform.position);
+                float distance2 = Vector3.Distance(obj2.transform.position, transform.position);
+                return distance1.CompareTo(distance2);
+            });
+            targetToAttack = targetList[0];
         }
-        else
-        {
-            targetToAttack = null;
-
-            if (targetList.Count > 0)
-            {   
-                targetList.RemoveAll(target => (target.gameObject.activeSelf == false || target.targetable == false));
-                targetList.Sort((obj1, obj2) =>
-                {
-                    float distance1 = Vector3.Distance(obj1.transform.position, transform.position);
-                    float distance2 = Vector3.Distance(obj2.transform.position, transform.position);
-                    return distance1.CompareTo(distance2);
-                });
-                if (targetList.Count > 0)
-                    targetToAttack = targetList[0];
-            }
-            
-            
-        }
-        
-        
+                 
     }
     public virtual IEnumerator Attack()
     {
@@ -201,7 +196,12 @@ public class Character : GameUnit
     }
     public virtual void OnDespawn()
     {   
+        for(int i = 0; i < characterTarget.Count;  i++)
+        {
+            characterTarget[i].ResetTargetCharacter();
+        }
         this.targetList.Clear();
+        this.characterTarget.Clear();
         this.targetToAttack = null;
         weaponOnHand.DestroyCurrentWeapon();
         SimplePool.Despawn(targetIndicator);
@@ -216,25 +216,23 @@ public class Character : GameUnit
     }
     public bool CheckTargetInRange()
     {   
-        if (targetList.Count > 0) {
-            bool checkNullTarget = false;
-            for (int i = 0; i < this.targetList.Count; i++)
-            {
-                if (this.targetList[i].gameObject.activeSelf == true)
-                {
-                    checkNullTarget = true;
-                    break;
-                }
-            }
-            return checkNullTarget;
+        if (targetList.Count <= 0) return targetToAttack != null && targetList.Count > 0;
+        bool checkNullTarget = false;
+        for (int i = 0; i < this.targetList.Count; i++)
+        {
+            if (this.targetList[i].gameObject.activeSelf != true) continue;
+            checkNullTarget = true;
+            break;
+            
         }
-        return targetToAttack != null && targetList.Count > 0;
+        return checkNullTarget;
+        
+        
     }
     public void ChangeScale()
     {   
         if (this.transform.localScale.x < 1.5f)
         {
-            Vector3 scaleChange = new Vector3(0.1f, 0.1f, 0.1f);
             this.transform.localScale += scaleChange;
         }
         
@@ -251,7 +249,7 @@ public class Character : GameUnit
     public void StoppMoving()
     {   
         if(this.CompareTag(Const.ENEMY_TAGNAME))
-        agent.enabled = false;
+            agent.enabled = false;
         this.rb.velocity = Vector3.zero;
     }
     public void SetIsPlay(bool isPlay)
@@ -282,7 +280,7 @@ public class Character : GameUnit
     }
     public Collider GetCollider()
     {
-        return this._collider;
+        return this.colliderCharacter;
     }
     public bool CheckMoving()
     {
@@ -290,13 +288,21 @@ public class Character : GameUnit
     }
     public void InstantiateTargetIndicator()
     {
-        targetIndicator = SimplePool.Spawn<TargetIndicator>(PoolType.targetIndicator);
-        targetIndicator.SetTarget(pos);
+        targetIndicator = SimplePool.Spawn<TargetIndicator>(PoolType.TargetIndicator);
+        targetIndicator.SetTarget(characterPosition);
     }
    
     public void SetScore()
     {
-        score++;
-        targetIndicator.SetScore(score);
+        characterScore++;
+        targetIndicator.SetScore(characterScore);
+    }
+    public void AddCharacterTarger(Character character)
+    {
+        characterTarget.Add(character);
+    }
+    public void RemoveCharacterTarger(Character character)
+    {
+        characterTarget.Remove(character);
     }
 }

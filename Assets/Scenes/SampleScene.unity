@@ -200,9 +200,7 @@ MonoBehaviour:
   levels:
   - {fileID: 1983314191674572147, guid: d6fde12f51af12a41b89d848dfc10a4b, type: 3}
   enemyOnLevel: 310000006300000077000000950000009500000095000000
-  currentLevel: {fileID: 0}
-  coinObtainCurrentLevel: 0
-  player: {fileID: 0}
+  player: {fileID: 7959402568642486142}
 --- !u!4 &124086227
 Transform:
   m_ObjectHideFlags: 0
@@ -2562,19 +2560,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolType: 0
   animator: {fileID: 1117019844}
+  agent: {fileID: 0}
   weaponGunner: {fileID: 282065232}
   rb: {fileID: 7674409817999534604}
   weaponOnHand: {fileID: 3921962068126608423}
   hairOnHead: {fileID: 1317073655}
-  attackRange: {fileID: 7133931288158001359}
-  agent: {fileID: 0}
   Pant: {fileID: 1324236258}
   bodySkin: {fileID: 603874811}
   pantData: {fileID: 11400000, guid: da3fddb572071de48aca2a98bd5ddae1, type: 2}
   movingSpeed: 6
-  _collider: {fileID: 7798871184912218633}
+  colliderCharacter: {fileID: 7798871184912218633}
   targetIndicator: {fileID: 0}
-  pos: {fileID: 1081880547}
+  characterPosition: {fileID: 1081880547}
+  attackRange: {fileID: 7133931288158001359}
   targetToAttack: {fileID: 0}
   targetList: []
   isPlay: 0

@@ -150,9 +150,9 @@ public enum PoolType
     Candy_2 = 2,
     Candy_3 = 3,
     Enemy = 4,
-    booster = 5,
-    shield = 6,
-    targetIndicator = 7,
+    Booster = 5,
+    Shield = 6,
+    TargetIndicator = 7,
 }
 
 
